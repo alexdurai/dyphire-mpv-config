@@ -1,0 +1,16 @@
+# Multimedia codecs and plugins
+#ffmpeg
+#ffmpeg-libs
+xclip
+gstreamer1-plugins-bad-free
+gstreamer1-plugins-good
+gstreamer1-plugins-base
+gstreamer1-plugins-ugly-free
+gstreamer1-plugin-libav
+gstreamer1-plugin-openh264
+gstreamer1-libav
+gstreamer1-vaapi
+lame
+flac
+x264
+x265

@@ -13,11 +13,11 @@ local input_loaded, input = pcall(require, "mp.input")
 local uosc_available = false
 
 local o = {
-    -- API token, 可以在 https://assrt.net 上注册账号后在个人界面获取
+    --API token can be obtained from the personal interface after registering an account at https://assrt.net
     api_token = "tNjXZUnOJWcHznHDyalNMYqqP6IdDdpQ",
-    -- 是否使用 https
+    --Whether to use https
     use_https = true,
-    -- 代理设置
+    --proxy settings
     proxy = "",
 }
 
@@ -330,10 +330,10 @@ local function download_file(url, fname)
         end
     end
 
-    local message = "正在下载字幕..."
+local message = "Downloading subtitles..."
     local type = "download_subtitle"
-    local title = "字幕下载菜单"
-    local footnote = "使用 / 打开筛选"
+    local title = "Subtitle download menu"
+    local footnote = "Use /to turn on filtering"
     if uosc_available then
         update_menu_uosc(type, title, message, footnote)
     else
@@ -349,7 +349,7 @@ local function download_file(url, fname)
     if res.status == 0 then
         if file_exists(sub_path) then
             append_sub(sub_path)
-            local message = "字幕下载完成, 已载入"
+            local message = "Subtitle download completed, loaded"
             if uosc_available then
                 update_menu_uosc(type, title, message, footnote)
                 -- 下载完字幕1.5秒后关闭面板
@@ -362,7 +362,7 @@ local function download_file(url, fname)
             msg.info("Subtitle downloaded: " .. sub_path)
         end
     else
-        local message = "字幕下载失败，查看控制台获取更多信息"
+        local message = "Subtitle download failed, check the console for more information"
         if uosc_available then
             update_menu_uosc(type, title, message, footnote)
         else
@@ -374,10 +374,10 @@ local function download_file(url, fname)
 end
 
 local function fetch_subtitle_details(sub_id)
-    local message = "正在加载字幕详细信息..."
+    local message = "Loading subtitle details..."
     local type = "subtitle_details"
-    local title = "字幕下载菜单"
-    local footnote = "使用 / 打开筛选"
+    local title = "Subtitle download menu"
+    local footnote = "Use /to turn on filtering"
     if uosc_available then
         update_menu_uosc(type, title, message, footnote)
     else
@@ -387,7 +387,7 @@ local function fetch_subtitle_details(sub_id)
     local url = ASSRT_DETAIL_API .."?token=" .. o.api_token .. "&id=" .. (sub_id or 0)
     local res = http_request(url)
     if not res or res.status ~= 0 then
-        local message = "获取字幕详细信息失败，查看控制台获取更多信息"
+        local message ="Failed to obtain subtitle details, check the console for more information"
         if uosc_available then
             update_menu_uosc(type, title, message, footnote)
         else
@@ -400,7 +400,7 @@ local function fetch_subtitle_details(sub_id)
     local items = {}
     items[#items + 1] = {
         title = "..",
-        hint = "返回搜索结果",
+        hint = "Return search results",
         value = {
             "script-message-to",
             mp.get_script_name(),
@@ -456,11 +456,11 @@ end
 local function search_subtitles(pos, query)
     local items = {}
     local type = "menu_subtitle"
-    local title = "输入搜索内容"
-    local footnote = "使用enter或ctrl+enter进行搜索"
+    local title = "Enter search content"
+    local footnote = "Use enter or ctrl+enter to search"
     if pos ~= "has_details" and (query ~= cache.query or tonumber(pos) > 0) then
         local pos = tonumber(pos)
-        local message = "正在搜索字幕..."
+        local message = "Searching for subtitles..."
         local cmd = { "script-message-to", mp.get_script_name(), "search-subtitles-event", tostring(pos) }
         if uosc_available then
             update_menu_uosc(type, title, message, footnote, cmd, query)
@@ -471,7 +471,7 @@ local function search_subtitles(pos, query)
         local url = ASSRT_SEARCH_API .. "?token=" .. o.api_token .. "&q=" .. url_encode(query) .. "&no_muxer=1&pos=" .. pos
         local res = http_request(url)
         if not res or res.status ~= 0 then
-            local message = "搜索字幕失败，查看控制台获取更多信息"
+            local message = "Searching for subtitles failed, check the console for more information"
             if uosc_available then
                 update_menu_uosc(type, title, message, footnote, cmd, query)
             else
@@ -485,7 +485,7 @@ local function search_subtitles(pos, query)
         local subs = {}
         if sub then subs = res.sub.subs end
         if #subs == 0 then
-            local message = "未找到字幕，建议更改关键字尝试重新搜索"
+            local message = "Subtitles not found, it is recommended to change the keywords and try searching again"
             if uosc_available then
                 update_menu_uosc(type, title, message, footnote, cmd, query)
             else
@@ -497,7 +497,7 @@ local function search_subtitles(pos, query)
 
         table.insert(items, {
             title = "..",
-            hint = "返回搜索菜单",
+            hint = "Return to search menu",
             value = {
                 "script-message-to",
                 mp.get_script_name(),
@@ -524,7 +524,7 @@ local function search_subtitles(pos, query)
         if #items == 16 then
             pos = pos + 15
             table.insert(items, {
-                title = "加载下一页",
+                title = "Load next page",
                 value = {
                     "script-message-to",
                     mp.get_script_name(),
@@ -560,7 +560,7 @@ function open_menu_select(menu_items)
     end
     mp.commandv('script-message-to', 'console', 'disable')
     input.select({
-        prompt = '筛选:',
+        prompt = 'filter:',
         items = item_titles,
         submit = function(id)
             mp.commandv(unpack(item_values[id]))
@@ -571,7 +571,7 @@ end
 function open_input_menu_get(pos, query)
     mp.commandv('script-message-to', 'console', 'disable')
     input.get({
-        prompt = '搜索字幕:',
+        prompt = 'Search subtitles:',
         default_text = query,
         cursor_position = query and #query + 1,
         submit = function(text)
@@ -584,7 +584,7 @@ end
 function open_input_menu_uosc(pos, query)
     local menu_props = {
         type = "menu_subtitle",
-        title = "输入搜索内容",
+        title = "Enter search content",
         search_style = "palette",
         search_debounce = "submit",
         search_suggestion = query,
@@ -594,7 +594,7 @@ function open_input_menu_uosc(pos, query)
             "search-subtitles-event",
             tostring(pos),
         },
-        footnote = "使用enter或ctrl+enter进行搜索",
+        footnote = "Use enter or ctrl+enter to search",
         items = {},
     }
     local json_props = utils.format_json(menu_props)

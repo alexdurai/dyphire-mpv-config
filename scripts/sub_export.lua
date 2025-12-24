@@ -96,8 +96,8 @@ local function export_selected_subtitles()
             end
 
             if o.language == 'chs' then
-                msg.info("正在导出当前字幕")
-                mp.osd_message("正在导出当前字幕")
+                msg.info("Exporting current subtitles")
+                mp.osd_message("Exporting current subtitles")
             else
                 msg.info("Exporting selected subtitles")
                 mp.osd_message("Exporting selected subtitles")
@@ -126,8 +126,8 @@ function process()
     mp.set_osd_ass(screenx, screeny, "")
     if res.status == 0 then
         if o.language == 'chs' then
-            msg.info("当前字幕已导出")
-            mp.osd_message("当前字幕已导出")
+            msg.info("The current subtitles have been exported")
+            mp.osd_message("The current subtitles have been exported")
         else
             msg.info("Finished exporting subtitles")
             mp.osd_message("Finished exporting subtitles")
@@ -136,8 +136,8 @@ function process()
         mp.set_property("sub-visibility", "yes")
     else
         if o.language == 'chs' then
-            msg.info("当前字幕导出失败")
-            mp.osd_message("当前字幕导出失败, 查看控制台获取更多信息.")
+            msg.info("Current subtitle export failed")
+            mp.osd_message("The current subtitle export failed, check the console for more information.")
         else
             msg.info("Failed to export subtitles")
             mp.osd_message("Failed to export subtitles, check console for more info.")

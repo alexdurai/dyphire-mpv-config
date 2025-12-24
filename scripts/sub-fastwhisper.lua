@@ -53,7 +53,7 @@ local o = {
     -- See the corresponding API documentation for instructions
     api_rate = 15,
     -- Translation target language
-    translate = "Chinese",
+    translate = "English",
     -- Specify the font to be used for the generated ass captions
     font_name = "sans-serif",
 }
